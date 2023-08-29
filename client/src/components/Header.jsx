@@ -7,6 +7,7 @@ import DialogProfile from "./DialogProfile";
 import { useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AccountContex } from "../App";
+import { useNavigate } from "react-router-dom";
 
 export default function Header({
   openSetting,
@@ -19,12 +20,20 @@ export default function Header({
   const { user } = useContext(AccountContex);
   const location = useLocation();
   const showLocation = location.pathname === "/";
+
+  const navigate = useNavigate();
   return (
     <header className="flex justify-between gap-3 h-[74px] border-1 top-0 sticky bg-white shadow-md p-6 items-center text-[#272829] z-10">
       <div className="flex w-full gap-4">
         <NavLink
           className="flex text-4xl font-bold items-center gap-1 cursor-pointer"
-          to={"/"}
+          onClick={() => {
+            if (user.role === "User") {
+              navigate("/dashboard");
+            } else {
+              navigate("/");
+            }
+          }}
         >
           <GiHouse />
           <span className="text-2xl">KostHub</span>

@@ -1,0 +1,3 @@
+INSERT INTO [dbo].[Accounts] ([Email], [Password], [Name], [Foto], [PhoneNumber], [Role]) VALUES (N'akbar@gmail.com', N'$2a$11$JB1qqmJiLzG4Pae/QTkEGOxXoO6.mtuBx7i3RmzirfAZ2ZUJh60S6', N'Akbar', N'Profil.png', N'085555555555555', N'User')
+INSERT INTO [dbo].[Accounts] ([Email], [Password], [Name], [Foto], [PhoneNumber], [Role]) VALUES (N'andri@gmail.com', N'$2a$11$qcdS3nC4xLVjAN07wDLSa.auYyLMbLFPq1PsjujzMMTSFSpH.iyQi', N'andriansyah', N'e060accd-b93c-4c1c-b15f-afed01638ee1.jpeg', N'0895606014734', N'Owner')
+INSERT INTO [dbo].[Accounts] ([Email], [Password], [Name], [Foto], [PhoneNumber], [Role]) VALUES (N'reza@gmail.com', N'$2a$11$pbklCUpA2IV.KR3F73AmReGlX2anXuDPzjf7RbSulPA3Favh.e4lO', N'reza', N'f5d757e7-8ee6-4ef6-bb98-fc1566ac6831.jpeg', N'0855555555555', N'Owner')

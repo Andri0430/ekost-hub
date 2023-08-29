@@ -48,7 +48,7 @@ builder.Services.AddScoped<IFacility, FacilityRepo>();
 
 builder.Services.AddDbContext<EkostContext>(options =>
 {
-    options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")!);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 var app = builder.Build();

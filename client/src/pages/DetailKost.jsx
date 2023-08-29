@@ -10,6 +10,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { MdEmail, MdPhone } from "react-icons/md";
 import { BiSolidDoorOpen } from "react-icons/bi";
 import Payment from "../components/Payment";
+import { useNavigate } from "react-router-dom";
 
 export default function DetailKost() {
   const { id } = useParams();
@@ -28,12 +29,20 @@ export default function DetailKost() {
   const [namaKost, setNamaKost] = useState("");
   const bulan = ["1 Bulan", "3 Bulan", "6 Bulan"];
 
-  useEffect(() => {
-    const response = api(`/Kost/id?id=${id}`);
-    response.then((kost) => {
-      setDetailKost(kost);
-      setFavorit(kost.favorits);
+  const fetchData = async () => {
+    const response = await fetch(`http://localhost:5000/api/Kost/id?id=${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user.email),
     });
+    const data = await response.json();
+    setDetailKost(data);
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [id]);
 
   useEffect(() => {
@@ -62,6 +71,7 @@ export default function DetailKost() {
       setUserFavorit(false);
     }
   };
+  const navigate = useNavigate();
   return (
     <main className="flex flex-col w-full py-3  min-h-screen items-start lg:flex-row lg:px-10">
       {showPayment && (
@@ -89,7 +99,7 @@ export default function DetailKost() {
             </p>
           </div>
           <div className="flex flex-col w-full text-gray-900 p-2 justify-center text-md gap-2 sm:text-xl md:text-2xl lg:gap-8">
-            <p className="border w-fit border-gray-700 rounded-sm p-1 font-bold">
+            <p className="border w-fit px-2 border-gray-700 rounded-sm p-1 font-bold">
               {detailKost.kostType}
             </p>
             <div className="flex items-center border-b py-3 font-bold gap-4 lg:gap-10">
@@ -207,7 +217,14 @@ export default function DetailKost() {
               }
             />
           </div>
-          <button className="font-bold border-2 border-gray-800 w-full p-2 flex items-center justify-center rounded-md hover:bg-gray-800 hover:text-white">
+          <button
+            className="font-bold border-2 border-gray-800 w-full p-2 flex items-center justify-center rounded-md hover:bg-gray-800 hover:text-white"
+            onClick={() => {
+              if (user === "") {
+                navigate("/login");
+              }
+            }}
+          >
             Ajukan Sewa
           </button>
         </form>

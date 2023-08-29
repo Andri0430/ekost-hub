@@ -9,7 +9,6 @@ import axios from "axios";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import { Navigate } from "react-router-dom";
 
 export default function Login() {
   const [notifikasi, setNotifikasi] = useOutletContext();
@@ -54,7 +53,6 @@ export default function Login() {
       setNotifikasi({ ...notifikasi, status: true, pesan: data.message });
     }
   };
-
   return (
     <main
       className={`${
@@ -77,7 +75,11 @@ export default function Login() {
             onClick={() => {
               setNotifikasi(!notifikasi);
               if (notifikasi.pesan === "Login Berhasil") {
-                navigate("/");
+                if (login.role === "Owner") {
+                  navigate("/dashboard");
+                } else {
+                  navigate("/");
+                }
               }
             }}
           >

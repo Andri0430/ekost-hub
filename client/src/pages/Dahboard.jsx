@@ -211,7 +211,7 @@ export default function Dashboard() {
                       <div className="flex flex-col gap-3 w-full justify-center items-center p-2">
                         <img
                           src={`http://localhost:5000/Uploads/${detailKost.kostImage}`}
-                          className="w-[130px] h[[130px] object-fill rounded-full p-2 border-4 border-gray-800"
+                          className="w-[200px] h-[200px] rounded-full p-2 border-4 border-gray-800"
                         />
                         {!showInputFile && (
                           <div
@@ -272,7 +272,7 @@ export default function Dashboard() {
                         <span className="flex gap-2">
                           <p className="font-bold">Harga :</p>
                           <p className="flex">
-                            {detailKost.kostPrice.toLocaleString("Id")}
+                            Rp.{detailKost.kostPrice.toLocaleString("id")}
                             /bulan
                           </p>
                         </span>
@@ -309,7 +309,9 @@ export default function Dashboard() {
                             Deskripsi Belum Ditambahkan
                           </div>
                         ) : (
-                          <p>{detailKost.description}</p>
+                          <p className="flex flex-wrap text-justify">
+                            {detailKost.description}
+                          </p>
                         )}
                       </div>
                       <div className="flex flex-col gap-1 w-[60%] bg-slate-200 p-2 rounded-lg text-gray-700">
