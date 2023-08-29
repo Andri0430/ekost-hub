@@ -1,34 +1,54 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Server.Models;
+﻿using server.Helpers;
+using server.Interface;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Server.Controllers
+namespace server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class KostController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetAllProducts()
+        private readonly IKost _kostService;
+        public KostController(IKost kostService)
         {
-            List<Kost> kostList = Data.Data.ListData();
-            var kostResponse = kostList.Select(kostList => new KostDto
-            {
-                Id = kostList.Id,
-                KostName = kostList.KostName,
-                Gambar = kostList.Gambar,
-                Price = kostList.Price,
-                TypeKost = kostList.TypeKost,
-                Address = kostList.Address,
-            }).ToList();
-
-            return Ok(kostResponse);
+            _kostService = kostService;
         }
 
-        [HttpGet("id")]
-        public IActionResult GetKostById(int id)
+        [HttpGet]
+        public IActionResult GetAllKost()
         {
-            List<Kost> kostList = Data.Data.ListData();
-            var kost = kostList.Where(k => k.Id == id).FirstOrDefault();
+            return Ok(_kostService.GetAllKost());
+        }
+
+        [HttpGet("type-kost")]
+        public IActionResult GetKostByTypeKost(string typeKost)
+        {
+            var kost = _kostService.GetKostByTypeKost(typeKost);
+            if (kost.Count == 0) return BadRequest("Kost tidak ditemukan");
+            return Ok(kost);
+        }
+
+        [HttpGet("city")]
+        public IActionResult GetAllKostByCity(string city)
+        {
+            var kost = _kostService.GetKostByCity(city);
+            if (kost == null) return BadRequest("Kost tidak ditemukan");
+            return Ok(kost);
+        }
+
+        [HttpGet("name")]
+        public IActionResult GetKostByName(string name)
+        {
+            var kost = _kostService.GetKostByKostName(name);
+            if (kost == null) return BadRequest("Kost tidak ditemukan");
+            return Ok(kost);
+        }
+
+        [HttpPost("id")]
+        public IActionResult GetDetailKostById(int id)
+        {
+            var kost = _kostService.DetailKost(id);
+            if (kost == null) return BadRequest("Kost tidak ditemukan");
             return Ok(kost);
         }
     }
